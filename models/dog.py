@@ -1,3 +1,5 @@
+from sqlalchemy.orm import relationship
+
 from app import db
 
 
@@ -8,3 +10,5 @@ class Dog(db.Model):
     name = db. Column(db.String(), nullable=False)
     age = db.Column(db.Integer(), nullable=True)
     description = db.Column(db.String(), nullable=True)
+
+    toys = relationship("Toy", backref="dog")
