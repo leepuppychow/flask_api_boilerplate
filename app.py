@@ -1,13 +1,13 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+from errors.handlers import register_error_handlers
+
 db = SQLAlchemy()
 
 # Import blueprints:
 from routes.dog_blueprint import dog_blueprint as dog_blueprint_v1
-
-def not_found_error(error):
-    return {"message": "Sorry unable to find that resource!"}, 404
+from routes.toy_blueprint import toy_blueprint as toy_blueprint_v1
 
 def create_app(config_obj):
     app = Flask(__name__)
@@ -20,9 +20,10 @@ def create_app(config_obj):
 
     # Register routes here:
     app.register_blueprint(dog_blueprint_v1, url_prefix='/api/v1/dogs')
+    app.register_blueprint(toy_blueprint_v1, url_prefix='/api/v1/dogs/<int:dog_id>/toys')
 
-    # Can register generic error handler after blueprints:
-    app.register_error_handler(404, not_found_error)
+    # Register error handlers after blueprints:
+    register_error_handlers(app)
     return app
 
 app = create_app('config.development')
