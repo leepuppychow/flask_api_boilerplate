@@ -2,16 +2,16 @@ import pytest
 from app import create_app, db
 
 
-@pytest.fixture
-def test_client(scope="module"):
+@pytest.fixture()
+def test_client():
     app = create_app('config.testing')
 
     with app.test_client() as client:
         with app.app_context():
             yield client
 
-@pytest.fixture
-def init_database(generate_dog, scope="module"):
+@pytest.fixture()
+def init_database(generate_dog):
     db.create_all()
 
     dog_1 = generate_dog(name="dog 1", age=1)
@@ -25,8 +25,8 @@ def init_database(generate_dog, scope="module"):
     db.session.remove()
     db.drop_all()
 
-@pytest.fixture
-def generate_dog(scope="module"):
+@pytest.fixture()
+def generate_dog():
     def _generate_dog(*args, **kwargs):
         from models.dog import Dog
 

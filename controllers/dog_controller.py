@@ -50,6 +50,6 @@ class DogController:
         try:
             db.session.delete(dog)
             db.session.commit()
-            return {"message": f"Successfully deleted dog: {dog_id}"}, 202
+            return {"message": f"Successfully deleted dog: {dog_id}"}, 200
         except Exception as err:
             return {"message": f"Unable to delete dog: {dog_id}"}
