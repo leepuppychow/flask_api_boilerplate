@@ -1,6 +1,7 @@
 import json
 from flask import jsonify, request
 from marshmallow import ValidationError
+from sqlalchemy.exc import InvalidRequestError
 
 from app import db
 from models.dog import Dog
@@ -13,8 +14,8 @@ class DogController:
         try:
             dogs = Dog.query.filter_by(**request.args).all()
             return jsonify(dogs_schema.dump(dogs))
-        except Exception as err:
-            return {"message": "Unable to find dogs based on entered filters."}, 500
+        except InvalidRequestError as err:
+            return {"message": "Unable to find dogs based on filters entered."}, 500
 
     @classmethod
     def show(cls, dog_id):
