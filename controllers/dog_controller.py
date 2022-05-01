@@ -10,8 +10,11 @@ from schemas.dog_schema import dog_schema, dogs_schema
 class DogController:
     @classmethod
     def index(cls):
-        dogs = Dog.query.all()
-        return jsonify(dogs_schema.dump(dogs))
+        try:
+            dogs = Dog.query.filter_by(**request.args).all()
+            return jsonify(dogs_schema.dump(dogs))
+        except Exception as err:
+            return {"message": "Unable to find dogs based on entered filters."}, 500
 
     @classmethod
     def show(cls, dog_id):
