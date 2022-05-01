@@ -1,6 +1,8 @@
 import pytest
 from app import create_app, db
 
+from models.dog import Dog
+
 
 @pytest.fixture()
 def test_client():
@@ -11,11 +13,11 @@ def test_client():
             yield client
 
 @pytest.fixture()
-def init_database(generate_dog):
+def init_database():
     db.create_all()
 
-    dog_1 = generate_dog(name="dog 1", age=1)
-    dog_2 = generate_dog(name="dog 2", age=2)
+    dog_1 = Dog(name="dog 1", age=1)
+    dog_2 = Dog(name="dog 2", age=2)
 
     db.session.add_all([dog_1, dog_2])
     db.session.commit()
@@ -24,12 +26,3 @@ def init_database(generate_dog):
 
     db.session.remove()
     db.drop_all()
-
-@pytest.fixture()
-def generate_dog():
-    def _generate_dog(*args, **kwargs):
-        from models.dog import Dog
-
-        return Dog(**kwargs)
-
-    return _generate_dog

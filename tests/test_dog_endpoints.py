@@ -9,8 +9,8 @@ class TestDogEndpoints:
         assert response.status_code == 200
         assert len(response.json) == 2
 
-    def test_show(self, test_client, init_database, generate_dog):
-        doggo = generate_dog(id=100, name="Tobi", age=16)
+    def test_show(self, test_client, init_database):
+        doggo = Dog(id=100, name="Tobi", age=16)
         db.session.add(doggo)
         db.session.commit()
 
@@ -55,8 +55,8 @@ class TestDogEndpoints:
         assert response.status_code == 400
         assert response.json == {'message': {'age': ['Not a valid integer.']}}
 
-    def test_update_success(self, test_client, init_database, generate_dog):
-        doggo = generate_dog(id=100, name="Tobi", age=16)
+    def test_update_success(self, test_client, init_database):
+        doggo = Dog(id=100, name="Tobi", age=16)
         db.session.add(doggo)
         db.session.commit()
 
@@ -73,8 +73,8 @@ class TestDogEndpoints:
         assert tobi.name == "TOBI"
         assert tobi.age == 17
 
-    def test_delete_success(self, test_client, init_database, generate_dog):
-        doggo = generate_dog(id=100, name="Tobi", age=16)
+    def test_delete_success(self, test_client, init_database):
+        doggo = Dog(id=100, name="Tobi", age=16)
         db.session.add(doggo)
         db.session.commit()
 
