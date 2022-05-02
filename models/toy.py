@@ -1,5 +1,3 @@
-from sqlalchemy import ForeignKey
-
 from app import db 
 
 
@@ -9,4 +7,4 @@ class Toy(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db. Column(db.String(), nullable=False)
     description = db.Column(db.String(), nullable=True)
-    dog_id = db.Column(ForeignKey("dogs.id"))
+    dog_id = db.Column(db.ForeignKey("dogs.id"))
