@@ -5,10 +5,12 @@ from errors.handlers import register_error_handlers
 
 db = SQLAlchemy()
 
+# Import models:
+from models.sample_model import SampleModel
+
 # Import blueprints:
-from routes.dog_blueprint import dog_blueprint as dog_blueprint_v1
-from routes.toy_blueprint import toy_blueprint as toy_blueprint_v1
-from routes.park_blueprint import park_blueprint as park_blueprint_v1
+from routes.sample_blueprint import sample_blueprint as sample_blueprint_v1
+
 
 def create_app(config_obj):
     app = Flask(__name__)
@@ -20,11 +22,9 @@ def create_app(config_obj):
         db.session.commit()
 
     # Register routes here:
-    app.register_blueprint(dog_blueprint_v1, url_prefix='/api/v1/dogs')
-    app.register_blueprint(toy_blueprint_v1, url_prefix='/api/v1/dogs/<int:dog_id>/toys')
-    app.register_blueprint(park_blueprint_v1, url_prefix='/api/v1/dogs/<int:dog_id>/parks')
+    app.register_blueprint(sample_blueprint_v1, url_prefix='/api/v1/samples')
 
-    # Register error handlers after blueprints:
+    # Register app-level error handlers after blueprints:
     register_error_handlers(app)
     return app
 
