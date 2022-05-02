@@ -5,11 +5,11 @@ from errors.handlers import register_error_handlers
 
 db = SQLAlchemy()
 
-# Import models:
-from models.sample_model import SampleModel
+# ------- Import models -------
+# from models.sample_model import SampleModel
 
-# Import blueprints:
-from routes.sample_blueprint import sample_blueprint as sample_blueprint_v1
+# ------- Import blueprints -------
+# from routes.sample_blueprint import sample_blueprint as sample_blueprint_v1
 
 
 def create_app(config_obj):
@@ -21,11 +21,11 @@ def create_app(config_obj):
         db.create_all()
         db.session.commit()
 
-    # Register routes here:
-    app.register_blueprint(sample_blueprint_v1, url_prefix='/api/v1/samples')
+    # ------- Register routes here -------
+    # app.register_blueprint(sample_blueprint_v1, url_prefix='/api/v1/samples')
 
-    # Register app-level error handlers after blueprints:
-    register_error_handlers(app)
+    # ------- Register app-level error handlers after blueprints -------
+    # register_error_handlers(app)
     return app
 
 app = create_app('config.development')
